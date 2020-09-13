@@ -28,4 +28,6 @@ public StudentsController(StudentsService studentsService){
     return ResponseEntity.status(HttpStatus.OK).body(studentsService.studentsList);
 }
 
+@GetMapping(path="")
+
 }

@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 public class StudentsService {
    public List<Students> studentsList = studentsListInit();
-//    private StudentsRepository studentsRepository;
-//    public StudentsService(StudentsRepository studentsRepository){
-//        this.studentsRepository = studentsRepository;
-//    }
+    private StudentsRepository studentsRepository;
+    public StudentsService(StudentsRepository studentsRepository){
+        this.studentsRepository = studentsRepository;
+    }
     public List<Students> studentsListInit(){
         List<Students> studentsList = new ArrayList<Students>();
         Students students1 = new Students();
@@ -35,6 +35,11 @@ public class StudentsService {
         int id = students.getId();
         studentsList.remove(students);
         return ResponseEntity.status(HttpStatus.OK).body(studentsList);
+    }
+
+    public Students getOneStudent(String name){
+        Students byName = studentsRepository.findByName(name);
+        return byName;
     }
 
 }
