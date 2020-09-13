@@ -2,10 +2,11 @@ package com.thoughtworks.capability.gtb.restfulapidesign.Controller;
 
 import com.thoughtworks.capability.gtb.restfulapidesign.Domain.Students;
 import com.thoughtworks.capability.gtb.restfulapidesign.Service.StudentsService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -16,8 +17,15 @@ public StudentsController(StudentsService studentsService){
 }
 
 @PostMapping(path="/addition")
-    public void addStudents(@RequestBody Students students){
-    studentsService.addStudent(students);
+    public ResponseEntity<List<Students>> addStudents(@RequestBody Students student){
+    studentsService.addStudent(student);
+    return ResponseEntity.status(HttpStatus.OK).body(studentsService.studentsList);
+}
+
+@DeleteMapping(path="/deletion")
+    public ResponseEntity<List<Students>> deleteStudents(@RequestBody Students student){
+    studentsService.deleteStudent(student);
+    return ResponseEntity.status(HttpStatus.OK).body(studentsService.studentsList);
 }
 
 }

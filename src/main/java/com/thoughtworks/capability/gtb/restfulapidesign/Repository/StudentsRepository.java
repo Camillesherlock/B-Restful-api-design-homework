@@ -1,5 +1,7 @@
 package com.thoughtworks.capability.gtb.restfulapidesign.Repository;
 
-public class StudentsRepository {
+import org.springframework.stereotype.Repository;
+
+public interface StudentsRepository extends Repository {
 
 }

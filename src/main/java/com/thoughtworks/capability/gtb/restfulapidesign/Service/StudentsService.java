@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class StudentsService {
-   private List<Students> studentsList = studentsListInit();
+   public List<Students> studentsList = studentsListInit();
 //    private StudentsRepository studentsRepository;
 //    public StudentsService(StudentsRepository studentsRepository){
 //        this.studentsRepository = studentsRepository;
@@ -19,7 +19,7 @@ public class StudentsService {
     public List<Students> studentsListInit(){
         List<Students> studentsList = new ArrayList<Students>();
         Students students1 = new Students();
-        students1.builder().name("xiaohong").id(1).gender("male").note("good students")
+        students1.builder().name("xiaohong").id(1).gender("MALE").note("good students")
                 .build();
         studentsList.add(students1);
         return studentsList;
@@ -28,7 +28,13 @@ public class StudentsService {
         if(students != null){
             studentsList.add(students);
         }
-    return ResponseEntity.status(HttpStatus.CREATED).build();
+    return ResponseEntity.status(HttpStatus.CREATED).body(studentsList);
+    }
+
+    public ResponseEntity deleteStudent(Students students){
+        int id = students.getId();
+        studentsList.remove(students);
+        return ResponseEntity.status(HttpStatus.OK).body(studentsList);
     }
 
 }
