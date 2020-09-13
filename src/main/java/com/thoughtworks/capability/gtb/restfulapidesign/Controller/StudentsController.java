@@ -1,6 +1,7 @@
 package com.thoughtworks.capability.gtb.restfulapidesign.Controller;
 
 import com.thoughtworks.capability.gtb.restfulapidesign.Domain.Students;
+import com.thoughtworks.capability.gtb.restfulapidesign.Domain.StudentsGroup;
 import com.thoughtworks.capability.gtb.restfulapidesign.Service.StudentsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,33 @@ public StudentsController(StudentsService studentsService){
     return ResponseEntity.status(HttpStatus.OK).body(studentsService.studentsList);
 }
 
-@GetMapping(path="")
+@GetMapping(path="/students")
+    public ResponseEntity<Students> findOneStudent(@RequestParam String name){
+    Students oneStudent = studentsService.getOneStudent(name);
+    return ResponseEntity.status(HttpStatus.OK).body(oneStudent);
+
+}
+
+@PutMapping(path="/students/operation")
+    public ResponseEntity<List<Students>> changeStudentMessage(@RequestBody Students students){
+    studentsService.updateStudentsMessage(students);
+    return  ResponseEntity.status(HttpStatus.OK).body(studentsService.originStudentsList);
+}
+
+@GetMapping(path="group-list")
+    public ResponseEntity<List<StudentsGroup>> getStudentsGroup(){
+    List<StudentsGroup> studentsGroups = studentsService.getStudentsGroups();
+    return ResponseEntity.status(HttpStatus.OK).body(studentsGroups);
+}
+
+@PostMapping(path="group-name")
+    public ResponseEntity<List<StudentsGroup>> changeTeamName(@RequestParam String originName,
+                                                              @RequestParam String updateName){
+    try{ studentsService.changeTeamName(originName, updateName);
+        return ResponseEntity.status(HttpStatus.OK).body(studentsService.getStudentsGroups());
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+    }
+}
 
 }
