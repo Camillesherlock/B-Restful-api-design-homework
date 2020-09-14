@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -56,6 +57,16 @@ public StudentsController(StudentsService studentsService){
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
+}
+
+@GetMapping(path="male-students")
+    public ResponseEntity getMaleStudents(){
+    return ResponseEntity.ok(studentsService.getMaleStudents());
+}
+
+@GetMapping(path="female-students")
+    public ResponseEntity getFemaleStudents(){
+    return ResponseEntity.ok(studentsService.getFemaleStudents());
 }
 
 }
